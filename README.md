@@ -24,3 +24,16 @@ new_img = eraser.erase(image)
 new_img = PIL.Image.fromarray(new_img)
 new_img.show()
 ```
+
+Get the pretrained models at [Hugging Face Zero Scratches](https://huggingface.co/leonelhs/zeroscratches)
+
+## Some Apps using the library:
+
+### [Face Shine](https://github.com/leonelhs/face-shine) 
+Face Shine Is a backend server for photo enhancement and restoration.
+
+### [Super Face](https://github.com/leonelhs/SuperFace/)
+Super Face is a Python QT frontend for Face Shine server.
+
+<img src="https://drive.google.com/uc?export=view&id=1D7hpjQSlUkzfTba-E5Ul4Rb1c8lYkFj5"/>
+<img src="https://drive.google.com/uc?export=view&id=1oKpJe-Ff3SeEekhGVRP1Ap3eIFqt0c8u"/>

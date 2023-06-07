@@ -8,34 +8,38 @@
 #
 ##############################################################################
 import logging
+import os.path
 
 import PIL.Image
+import cv2
 import numpy as np
 import torch
-import cv2
+from huggingface_hub import snapshot_download
 from torchvision.transforms import transforms
 
-from zeroscratches.maskscratches import ScratchesDetector
 from zeroscratches.erasescratches.models import Pix2PixHDModel_Mapping
 from zeroscratches.erasescratches.options import Options
+from zeroscratches.maskscratches import ScratchesDetector
 from zeroscratches.util import irregular_hole_synthesize, tensor_to_ndarray
 
-
-model_path_scratches = "models/zero_scratches/checkpoints/restoration"
+REPO_ID = "leonelhs/zeroscratches"
 
 
 class EraseScratches:
 
     def __init__(self):
-        self.detector = ScratchesDetector()
-        self.options = Options(model_path_scratches)
+
+        snapshot_folder = snapshot_download(repo_id=REPO_ID)
+        model_path = os.path.join(snapshot_folder, "restoration")
+        self.detector = ScratchesDetector(snapshot_folder)
+        self.options = Options(model_path)
         self.model_scratches = Pix2PixHDModel_Mapping()
         self.model_scratches.initialize(self.options)
         self.model_scratches.eval()
 
     def erase(self, image) -> np.array:
-        logging.info("Start erase scratches")
         transformed, mask = self.detector.process(image)
+        logging.info("Start erasing scratches")
 
         img_transform = transforms.Compose(
             [transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]

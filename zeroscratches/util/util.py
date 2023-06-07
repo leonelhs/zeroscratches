@@ -8,9 +8,9 @@ import os
 import PIL
 import numpy as np
 import torch
+import torch.nn.functional as F
 from PIL import Image
 from torchvision.utils import make_grid
-import torch.nn.functional as F
 
 
 def array2image(ndarray):

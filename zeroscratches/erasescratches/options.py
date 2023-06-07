@@ -15,9 +15,7 @@ class Options:
         self.no_instance = True
         self.checkpoints_dir = checkpoints
         self.gpu_ids = []
-        self.Quality_restore = False
-        self.Scratch_and_Quality_restore = True
-        self.HR = True
+
         ##
         self.mapping_net_dilation = 1
         self.use_segmentation_model = False
@@ -35,22 +33,17 @@ class Options:
         self.no_load_VAE = False
         self.use_vae_which_epoch = "latest"
 
-        if self.Quality_restore:
-            self.name = "mapping_quality"
-            self.load_pretrainA = os.path.join(self.checkpoints_dir, "VAE_A_quality")
-            self.load_pretrainB = os.path.join(self.checkpoints_dir, "VAE_B_quality")
-        if self.Scratch_and_Quality_restore:
-            self.NL_res = True
-            self.use_SN = True
-            self.correlation_renormalize = True
-            self.NL_use_mask = True
-            self.NL_fusion_method = "combine"
-            self.non_local = "Setting_42"
-            self.name = "mapping_scratch"
-            self.load_pretrainA = os.path.join(self.checkpoints_dir, "VAE_A_quality")
-            self.load_pretrainB = os.path.join(self.checkpoints_dir, "VAE_B_scratch")
-            if self.HR:
-                self.mapping_exp = 1
-                self.inference_optimize = True
-                self.mask_dilation = 3
-                self.name = "mapping_Patch_Attention"
+        self.NL_res = True
+        self.use_SN = True
+        self.correlation_renormalize = True
+        self.NL_use_mask = True
+        self.NL_fusion_method = "combine"
+        self.non_local = "Setting_42"
+        # self.name = "mapping_scratch"
+        self.load_pretrainA = os.path.join(self.checkpoints_dir, "VAE_A_quality")
+        self.load_pretrainB = os.path.join(self.checkpoints_dir, "VAE_B_scratch")
+
+        self.mapping_exp = 1
+        self.inference_optimize = True
+        self.mask_dilation = 3
+        self.name = "mapping_Patch_Attention"

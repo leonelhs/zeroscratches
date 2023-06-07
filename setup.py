@@ -26,6 +26,7 @@ def get_install_requires():
         "torch>=2.0.0",
         "torchvision",
         "pillow>=9.5.0",
+        "huggingface_hub"
     ]
 
     return install_requires

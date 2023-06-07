@@ -5,7 +5,7 @@ from zeroscratches import EraseScratches
 
 logging.basicConfig(level=logging.INFO)
 
-image_path = "/home/leonel/damage.jpg"
+image_path = "/home/leonel/old-couple.jpg"
 eraser = EraseScratches()
 
 image = PIL.Image.open(image_path)

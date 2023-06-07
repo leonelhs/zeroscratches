@@ -8,7 +8,7 @@
 #
 ##############################################################################
 import logging
-
+import os
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -20,12 +20,10 @@ from zeroscratches.util import data_transforms, scale_tensor, tensor_to_ndarray
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-model_path_mask = "./models/zero_scratches/checkpoints/detection/FT_Epoch_latest.pt"
-
 
 class ScratchesDetector:
 
-    def __init__(self):
+    def __init__(self, snapshot_folder):
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model_mask = networks.UNet(
             in_channels=1,
@@ -41,13 +39,14 @@ class ScratchesDetector:
             antialiasing=True,
         )
 
-        checkpoint = torch.load(model_path_mask, map_location=device)
+        model_path = os.path.join(snapshot_folder, "detection/FT_Epoch_latest.pt")
+        checkpoint = torch.load(model_path, map_location=device)
         self.model_mask.load_state_dict(checkpoint["model_state"])
         self.model_mask.cpu()
         self.model_mask.eval()
 
     def process(self, image: Image) -> np.array:
-        logging.info("Start mask scratches")
+        logging.info("Start detecting scratches")
         transformed_image = data_transforms(image, size="full_size")
         image = transformed_image.convert("L")
         image = tv.transforms.ToTensor()(image)
