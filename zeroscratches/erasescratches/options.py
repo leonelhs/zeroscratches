@@ -2,7 +2,7 @@ import os
 
 
 class Options:
-    def __init__(self, checkpoints):
+    def __init__(self, checkpoints, gpu_ids):
         self.serial_batches = True  # no shuffle
         self.no_flip = True  # no flip
         self.label_nc = 0
@@ -14,9 +14,7 @@ class Options:
         self.map_mc = 512
         self.no_instance = True
         self.checkpoints_dir = checkpoints
-        self.gpu_ids = []
-
-        ##
+        self.gpu_ids = gpu_ids
         self.mapping_net_dilation = 1
         self.use_segmentation_model = False
         self.feat_dim = -1

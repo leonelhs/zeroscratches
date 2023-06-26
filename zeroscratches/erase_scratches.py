@@ -32,7 +32,10 @@ class EraseScratches:
         snapshot_folder = snapshot_download(repo_id=REPO_ID)
         model_path = os.path.join(snapshot_folder, "restoration")
         self.detector = ScratchesDetector(snapshot_folder)
-        self.options = Options(model_path)
+        gpu_ids = []
+        if torch.cuda.is_available():
+            gpu_ids = [d for d in range(torch.cuda.device_count())]
+        self.options = Options(model_path, gpu_ids)
         self.model_scratches = Pix2PixHDModel_Mapping()
         self.model_scratches.initialize(self.options)
         self.model_scratches.eval()
