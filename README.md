@@ -6,7 +6,7 @@ This is a lightweight implementation of [Microsoft Bringing Old Photos Back to L
 
 ### Install
 ```shell
-pip install zeroscatches
+pip install zeroscratches
 ```
 ### Basic usage
 ```python
